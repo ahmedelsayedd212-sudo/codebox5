@@ -8,9 +8,9 @@ from utils.gemini_ai import GeminiAI
 from utils.speaker import Speaker
 
 
-# =========================
+# =========================================================
 # إعداد الصفحة
-# =========================
+# =========================================================
 st.set_page_config(
     page_title="CodeBox AI",
     page_icon="🤖",
@@ -19,9 +19,9 @@ st.set_page_config(
 )
 
 
-# =========================
-# CSS
-# =========================
+# =========================================================
+# CSS - تنسيق Streamlit فقط
+# =========================================================
 st.markdown(
     """
     <style>
@@ -79,35 +79,6 @@ st.markdown(
 
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-
-        animation: titleGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes titleGlow {
-
-        0% {
-            filter:
-                drop-shadow(
-                    0 0 5px
-                    rgba(124, 58, 237, 0.2)
-                );
-        }
-
-        50% {
-            filter:
-                drop-shadow(
-                    0 0 18px
-                    rgba(6, 182, 212, 0.35)
-                );
-        }
-
-        100% {
-            filter:
-                drop-shadow(
-                    0 0 5px
-                    rgba(124, 58, 237, 0.2)
-                );
-        }
     }
 
     .main-subtitle {
@@ -202,7 +173,6 @@ st.markdown(
     }
 
     [data-testid="stChatInput"] textarea:focus {
-
         border-color:
             #06b6d4 !important;
 
@@ -215,7 +185,6 @@ st.markdown(
     }
 
     .stButton > button {
-
         border-radius: 14px;
         min-height: 44px;
         font-weight: 700;
@@ -238,9 +207,7 @@ st.markdown(
     }
 
     .stButton > button:hover {
-
-        transform:
-            translateY(-3px);
+        transform: translateY(-3px);
 
         border-color:
             rgba(6,182,212,0.65);
@@ -251,7 +218,6 @@ st.markdown(
     }
 
     .stButton > button:active {
-
         transform:
             translateY(0px)
             scale(0.98);
@@ -259,7 +225,6 @@ st.markdown(
 
     h2,
     h3 {
-
         background:
             linear-gradient(
                 90deg,
@@ -274,7 +239,6 @@ st.markdown(
     }
 
     section[data-testid="stSidebar"] {
-
         background:
             linear-gradient(
                 180deg,
@@ -292,7 +256,6 @@ st.markdown(
     }
 
     .sidebar-title {
-
         text-align: center;
         font-size: 28px;
         font-weight: 900;
@@ -309,7 +272,6 @@ st.markdown(
     }
 
     .sidebar-subtitle {
-
         text-align: center;
         font-size: 13px;
         opacity: 0.65;
@@ -317,7 +279,6 @@ st.markdown(
     }
 
     section[data-testid="stSidebar"] .stButton > button {
-
         background:
             rgba(255,255,255,0.06);
 
@@ -329,7 +290,6 @@ st.markdown(
     }
 
     section[data-testid="stSidebar"] .stButton > button:hover {
-
         background:
             linear-gradient(
                 90deg,
@@ -346,7 +306,6 @@ st.markdown(
     }
 
     [data-testid="stAlert"] {
-
         border-radius: 15px;
 
         border:
@@ -359,7 +318,6 @@ st.markdown(
     }
 
     .app-footer {
-
         text-align: center;
         margin-top: 35px;
         padding: 15px;
@@ -377,7 +335,6 @@ st.markdown(
     }
 
     ::-webkit-scrollbar-thumb {
-
         background:
             linear-gradient(
                 180deg,
@@ -394,9 +351,9 @@ st.markdown(
 )
 
 
-# =========================
+# =========================================================
 # Session State
-# =========================
+# =========================================================
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -410,37 +367,35 @@ if "speaker" not in st.session_state:
     st.session_state.speaker = None
 
 
-# =========================
-# Gemini
-# =========================
+# =========================================================
+# تشغيل Gemini
+# =========================================================
 if st.session_state.assistant is None:
 
     try:
         st.session_state.assistant = GeminiAI()
 
     except Exception as error:
-
         st.error("❌ حدث خطأ أثناء تشغيل Gemini.")
         st.code(str(error))
         st.stop()
 
 
-# =========================
-# Speaker
-# =========================
+# =========================================================
+# تشغيل الصوت
+# =========================================================
 if st.session_state.speaker is None:
 
     try:
         st.session_state.speaker = Speaker()
 
     except Exception:
-
         st.session_state.speaker = None
 
 
-# =========================
-# Header
-# =========================
+# =========================================================
+# العنوان
+# =========================================================
 st.markdown(
     '<div class="main-title">🤖 CodeBox AI</div>',
     unsafe_allow_html=True,
@@ -454,9 +409,9 @@ st.markdown(
 )
 
 
-# =========================
-# Status
-# =========================
+# =========================================================
+# الحالة
+# =========================================================
 if st.session_state.speaker:
 
     try:
@@ -499,57 +454,43 @@ st.divider()
 
 
 # =========================================================
-# شريط الأخبار - يظهر فقط عند عدم وجود محادثة
+# شريط الأخبار المتحرك
 # =========================================================
 if not st.session_state.messages:
 
-    news_items = [
-        "🤖 CodeBox AI — مساعدك الذكي للبرمجة والتكنولوجيا",
-        "🐍 Python — C++ — Java — JavaScript — SQL",
-        "🐞 Debugging — AI — Programming — Software Engineering",
-        "💡 اكتب سؤالك الآن وابدأ المحادثة مع CodeBox AI",
+    st.subheader("📺 CodeBox News")
+
+    news = [
+        "🤖 CodeBox AI جاهز لاستقبال أسئلتك",
+        "🐍 Python • C++ • Java • JavaScript • SQL",
+        "🐞 Debugging • Artificial Intelligence • Programming",
+        "🎤 يمكنك التحدث مع CodeBox AI باستخدام صوتك",
+        "🔊 CodeBox AI يستطيع قراءة الردود صوتيًا",
+        "💡 اكتب سؤالك في الأسفل وابدأ المحادثة",
     ]
 
-    st.markdown("### 📺 CodeBox News")
+    ticker = st.empty()
 
-    # شريط العنوان
-    news_col1, news_col2 = st.columns([1, 5])
+    for _ in range(100):
 
-    with news_col1:
-        st.error("🔴 LIVE")
+        for item in news:
 
-    with news_col2:
-        st.info(
-            "📰 آخر الأخبار • CodeBox AI جاهز لاستقبال رسالتك"
-        )
+            if st.session_state.messages:
+                break
 
-    # اختيار الخبر
-    selected_news = st.selectbox(
-        "اختر الخبر",
-        news_items,
-        label_visibility="collapsed",
-    )
+            ticker.info(
+                f"🔴 عاجل  |  {item}"
+            )
 
-    # عرض الخبر بشكل كبير
-    st.markdown("### 📰")
+            time.sleep(1.5)
 
-    st.info(
-        selected_news
-    )
-
-    st.divider()
-
-    # أخبار سريعة
-    st.caption(
-        "🔴 عاجل   •   CodeBox AI يعمل الآن   •   "
-        "🎤 Voice Input   •   🔊 Text To Speech   •   "
-        "🧠 Gemini AI"
-    )
+        if st.session_state.messages:
+            break
 
 
-# =========================
-# عرض المحادثة
-# =========================
+# =========================================================
+# المحادثة
+# =========================================================
 for message in st.session_state.messages:
 
     role = message["role"]
@@ -570,10 +511,12 @@ for message in st.session_state.messages:
         )
 
 
-# =========================
-# Voice Input
-# =========================
-st.subheader("🎤 التحدث مع CodeBox AI")
+# =========================================================
+# الصوت
+# =========================================================
+st.subheader(
+    "🎤 التحدث مع CodeBox AI"
+)
 
 st.caption(
     "سجل رسالتك الصوتية وسيتم تحويلها إلى نص."
@@ -646,9 +589,9 @@ if audio_value is not None:
         )
 
 
-# =========================
-# Chat Input
-# =========================
+# =========================================================
+# إدخال الرسالة
+# =========================================================
 prompt = st.chat_input(
     "💬 اكتب رسالتك إلى CodeBox AI..."
 )
@@ -666,9 +609,9 @@ elif prompt:
     user_message = prompt
 
 
-# =========================
-# Send Message
-# =========================
+# =========================================================
+# إرسال الرسالة
+# =========================================================
 if user_message:
 
     if st.session_state.speaker:
@@ -723,7 +666,6 @@ if user_message:
                     + str(error)
                 )
 
-
         st.markdown(
             response
         )
@@ -739,7 +681,6 @@ if user_message:
     st.session_state.last_response = response
 
 
-    # تشغيل الرد صوتيًا
     if st.session_state.speaker:
 
         try:
@@ -752,9 +693,9 @@ if user_message:
             pass
 
 
-# =========================
-# Audio Controls
-# =========================
+# =========================================================
+# التحكم في الصوت
+# =========================================================
 st.divider()
 
 st.subheader(
@@ -833,16 +774,6 @@ with audio_col2:
                     "❌ حدث خطأ أثناء إيقاف الصوت."
                 )
 
-                st.code(
-                    str(error)
-                )
-
-        else:
-
-            st.info(
-                "نظام الصوت غير متاح."
-            )
-
 
 with audio_col3:
 
@@ -866,7 +797,6 @@ with audio_col3:
 
 
         try:
-
             st.session_state.assistant.reset_chat()
 
         except Exception:
@@ -880,9 +810,9 @@ with audio_col3:
         st.rerun()
 
 
-# =========================
+# =========================================================
 # Sidebar
-# =========================
+# =========================================================
 with st.sidebar:
 
     st.markdown(
@@ -899,9 +829,7 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-
     st.divider()
-
 
     st.subheader(
         "📊 حالة المساعد"
@@ -942,7 +870,6 @@ with st.sidebar:
 
 
     st.divider()
-
 
     st.subheader(
         "🎛️ التحكم السريع"
@@ -990,7 +917,6 @@ with st.sidebar:
         if st.session_state.speaker:
 
             try:
-
                 st.session_state.speaker.stop()
 
             except Exception:
@@ -1005,7 +931,6 @@ with st.sidebar:
         if st.session_state.speaker:
 
             try:
-
                 st.session_state.speaker.stop()
 
             except Exception:
@@ -1018,7 +943,6 @@ with st.sidebar:
 
 
         try:
-
             st.session_state.assistant.reset_chat()
 
         except Exception:
@@ -1033,7 +957,6 @@ with st.sidebar:
 
 
     st.divider()
-
 
     st.subheader(
         "✨ المميزات"
@@ -1051,7 +974,6 @@ with st.sidebar:
 
     st.divider()
 
-
     st.caption(
         "🚀 CodeBox"
     )
@@ -1061,9 +983,9 @@ with st.sidebar:
     )
 
 
-# =========================
+# =========================================================
 # Footer
-# =========================
+# =========================================================
 st.markdown(
     '<div class="app-footer">'
     '🤖 CodeBox AI • Powered by Gemini'
