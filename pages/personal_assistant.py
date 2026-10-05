@@ -19,351 +19,58 @@ st.set_page_config(
 
 
 # =========================================================
-# PROFESSIONAL AI STYLE
+# STREAMLIT STYLE
 # =========================================================
 
 st.markdown(
     """
     <style>
 
-    /* ================================
-       GLOBAL
-       ================================ */
-
     .stApp {
-        background:
-            radial-gradient(
-                circle at 50% -20%,
-                rgba(99, 102, 241, 0.16),
-                transparent 35%
-            ),
-            #080b12;
-        color: #f8fafc;
+        background-color: #f4f7fb;
     }
 
     .block-container {
-        max-width: 1180px;
-        padding-top: 1.5rem;
-        padding-bottom: 6rem;
+        max-width: 1100px;
+        padding-top: 2rem;
+        padding-bottom: 5rem;
     }
-
-    /* Hide Streamlit branding */
-    #MainMenu {
-        visibility: hidden;
-    }
-
-    footer {
-        visibility: hidden;
-    }
-
-    header {
-        background: transparent !important;
-    }
-
-
-    /* ================================
-       SIDEBAR
-       ================================ */
 
     section[data-testid="stSidebar"] {
-        background: #090c13;
-        border-right: 1px solid rgba(255,255,255,0.06);
+        background-color: #ffffff;
+        border-right: 1px solid #e2e8f0;
     }
-
-    section[data-testid="stSidebar"] > div {
-        padding-top: 1.5rem;
-    }
-
-
-    /* ================================
-       TOP BRAND
-       ================================ */
-
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 5px;
-    }
-
-    .brand-icon {
-        width: 46px;
-        height: 46px;
-        border-radius: 14px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 23px;
-
-        background:
-            linear-gradient(
-                135deg,
-                #6366f1,
-                #8b5cf6
-            );
-
-        box-shadow:
-            0 0 25px rgba(99,102,241,0.25);
-    }
-
-    .brand-name {
-        font-size: 25px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-    }
-
-    .brand-name span {
-        color: #818cf8;
-    }
-
-    .brand-subtitle {
-        color: #71798a;
-        font-size: 13px;
-        margin-left: 58px;
-        margin-top: -8px;
-    }
-
-
-    /* ================================
-       HERO
-       ================================ */
-
-    .hero {
-        text-align: center;
-        padding: 40px 20px 25px;
-    }
-
-    .hero-orb {
-        width: 78px;
-        height: 78px;
-        margin: 0 auto 20px;
-
-        border-radius: 24px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 38px;
-
-        background:
-            linear-gradient(
-                145deg,
-                #6366f1,
-                #7c3aed
-            );
-
-        box-shadow:
-            0 0 40px rgba(99,102,241,0.28),
-            inset 0 1px 0 rgba(255,255,255,0.2);
-    }
-
-    .hero-title {
-        font-size: 36px;
-        font-weight: 800;
-        letter-spacing: -1px;
-        margin-bottom: 8px;
-    }
-
-    .hero-description {
-        color: #8b93a4;
-        font-size: 15px;
-        max-width: 580px;
-        margin: auto;
-        line-height: 1.7;
-    }
-
-
-    /* ================================
-       STATUS
-       ================================ */
-
-    .status {
-        width: fit-content;
-        margin: 10px auto 25px;
-
-        padding: 7px 14px;
-
-        border-radius: 30px;
-
-        background: rgba(34,197,94,0.08);
-        border: 1px solid rgba(34,197,94,0.18);
-
-        color: #86efac;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-
-    /* ================================
-       FEATURE CHIPS
-       ================================ */
-
-    .chips {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin: 15px auto 30px;
-    }
-
-    .chip {
-        padding: 7px 12px;
-
-        border-radius: 10px;
-
-        background: rgba(255,255,255,0.035);
-        border: 1px solid rgba(255,255,255,0.07);
-
-        color: #aab2c2;
-        font-size: 12px;
-    }
-
-
-    /* ================================
-       CHAT
-       ================================ */
 
     [data-testid="stChatMessage"] {
-        background: rgba(255,255,255,0.025);
-        border: 1px solid rgba(255,255,255,0.055);
-
-        border-radius: 18px;
-
-        padding: 12px 16px;
-
-        margin-bottom: 12px;
-    }
-
-    [data-testid="stChatMessage"]:hover {
-        border-color: rgba(129,140,248,0.15);
-    }
-
-
-    /* ================================
-       CHAT INPUT
-       ================================ */
-
-    [data-testid="stChatInput"] {
-        position: fixed;
-        bottom: 22px;
-        left: 50%;
-        transform: translateX(-50%);
-
-        width: min(850px, 75vw);
-
-        z-index: 999;
+        border-radius: 16px;
+        margin-bottom: 10px;
+        border: 1px solid #e2e8f0;
+        background-color: #ffffff;
     }
 
     [data-testid="stChatInput"] > div {
-        background: #111620 !important;
-
-        border: 1px solid #252c3a !important;
-
-        border-radius: 18px !important;
-
-        box-shadow:
-            0 12px 45px rgba(0,0,0,0.35),
-            0 0 0 1px rgba(99,102,241,0.03);
+        border-radius: 16px;
+        border: 1px solid #cbd5e1;
+        background-color: #ffffff;
     }
-
-    [data-testid="stChatInput"] textarea {
-        color: #f8fafc !important;
-    }
-
-
-    /* ================================
-       BUTTONS
-       ================================ */
 
     .stButton > button {
-        border-radius: 12px !important;
-
+        border-radius: 12px;
         min-height: 42px;
-
-        background: #111620 !important;
-
-        color: #dce2ef !important;
-
-        border: 1px solid #252c3a !important;
-
+        border: 1px solid #dbe3ee;
+        background-color: #ffffff;
+        color: #1e293b;
         font-weight: 600;
-
-        transition:
-            background 0.2s ease,
-            border 0.2s ease,
-            transform 0.2s ease;
     }
 
     .stButton > button:hover {
-        background: #171d2a !important;
-
-        border-color: #6366f1 !important;
-
-        transform: translateY(-1px);
+        border-color: #2563eb;
+        color: #2563eb;
+        background-color: #f8fbff;
     }
-
-
-    /* ================================
-       AUDIO
-       ================================ */
-
-    [data-testid="stAudioInput"] {
-        border-radius: 14px;
-    }
-
-
-    /* ================================
-       DIVIDERS
-       ================================ */
 
     hr {
-        border: none !important;
-        border-top: 1px solid rgba(255,255,255,0.06) !important;
-        margin: 25px 0 !important;
-    }
-
-
-    /* ================================
-       SIDEBAR ITEMS
-       ================================ */
-
-    .side-title {
-        font-size: 12px;
-        color: #687184;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin: 20px 0 10px;
-    }
-
-    .side-feature {
-        padding: 10px 12px;
-        margin-bottom: 6px;
-
-        border-radius: 10px;
-
-        background: rgba(255,255,255,0.025);
-
-        color: #aab2c2;
-
-        font-size: 13px;
-    }
-
-
-    /* ================================
-       FOOTER
-       ================================ */
-
-    .mini-footer {
-        text-align: center;
-
-        color: #4f5869;
-
-        font-size: 11px;
-
-        margin-top: 30px;
+        border-color: #e2e8f0;
     }
 
     </style>
@@ -399,11 +106,9 @@ if st.session_state.assistant is None:
         st.session_state.assistant = GeminiAI()
 
     except Exception as e:
-
         st.error(
             f"حدث خطأ أثناء تشغيل Gemini AI:\n\n{e}"
         )
-
         st.stop()
 
 
@@ -426,32 +131,19 @@ if st.session_state.speaker is None:
 
 with st.sidebar:
 
-    st.markdown(
-        """
-        <div class="brand">
-            <div class="brand-icon">🤖</div>
-            <div class="brand-name">
-                Code<span>Box</span>
-            </div>
-        </div>
+    st.title("🤖 CodeBox AI")
 
-        <div class="brand-subtitle">
-            Personal AI Assistant
-        </div>
-        """,
-        unsafe_allow_html=True,
+    st.caption(
+        "Personal AI Assistant"
     )
 
     st.divider()
 
-    st.markdown(
-        '<div class="side-title">Workspace</div>',
-        unsafe_allow_html=True,
-    )
+    st.subheader("⚙️ التحكم")
 
     if st.button(
-        "＋  محادثة جديدة",
-        use_container_width=True,
+        "🆕 محادثة جديدة",
+        use_container_width=True
     ):
 
         st.session_state.messages = []
@@ -473,8 +165,8 @@ with st.sidebar:
 
 
     if st.button(
-        "◼  إيقاف الصوت",
-        use_container_width=True,
+        "🔇 إيقاف الصوت",
+        use_container_width=True
     ):
 
         if st.session_state.speaker:
@@ -485,70 +177,105 @@ with st.sidebar:
                 pass
 
 
-    st.markdown(
-        '<div class="side-title">Capabilities</div>',
-        unsafe_allow_html=True,
-    )
+    st.divider()
 
-    st.markdown(
-        """
-        <div class="side-feature">✦ Gemini AI</div>
-        <div class="side-feature">✦ Programming Assistant</div>
-        <div class="side-feature">✦ Voice Input</div>
-        <div class="side-feature">✦ Voice Response</div>
-        <div class="side-feature">✦ Debugging</div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.subheader("✨ المميزات")
+
+    st.write("💬 محادثة ذكية")
+    st.write("🐍 Python")
+    st.write("💻 Programming")
+    st.write("🤖 Artificial Intelligence")
+    st.write("🐞 Debugging")
+    st.write("🎤 Voice Input")
+    st.write("🔊 Voice Response")
 
     st.divider()
 
     st.caption(
-        "CodeBox AI • Intelligent Workspace"
+        "CodeBox AI"
     )
 
 
 # =========================================================
-# MAIN HERO
+# HEADER
+# =========================================================
+
+st.title("🤖 CodeBox AI")
+
+st.caption(
+    "مساعدك الشخصي الذكي للبرمجة والتكنولوجيا"
+)
+
+
+# =========================================================
+# STATUS
+# =========================================================
+
+if st.session_state.speaker:
+
+    try:
+
+        if st.session_state.speaker.is_playing():
+
+            st.success(
+                "🔊 المساعد يتحدث الآن"
+            )
+
+        else:
+
+            st.info(
+                "🟢 المساعد جاهز"
+            )
+
+    except Exception:
+
+        st.info(
+            "🟢 المساعد جاهز"
+        )
+
+else:
+
+    st.info(
+        "🟢 المساعد جاهز"
+    )
+
+
+# =========================================================
+# START SCREEN
 # =========================================================
 
 if not st.session_state.messages:
 
-    st.markdown(
-        """
-        <div class="hero">
-
-            <div class="hero-orb">
-                🤖
-            </div>
-
-            <div class="hero-title">
-                CodeBox AI
-            </div>
-
-            <div class="hero-description">
-                مساعدك الشخصي الذكي للبرمجة والتكنولوجيا،
-                مدعوم بتقنيات Gemini AI.
-            </div>
-
-            <div class="status">
-                ● AI ONLINE
-            </div>
-
-        </div>
-
-        <div class="chips">
-
-            <div class="chip">🐍 Python</div>
-            <div class="chip">💻 Programming</div>
-            <div class="chip">🤖 AI</div>
-            <div class="chip">🐞 Debugging</div>
-            <div class="chip">🎤 Voice</div>
-
-        </div>
-        """,
-        unsafe_allow_html=True,
+    st.subheader(
+        "👋 أهلاً بك"
     )
+
+    st.write(
+        "اكتب أي سؤال وسيقوم CodeBox AI بمساعدتك."
+    )
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+
+        st.info(
+            "🐍 Python\n\n"
+            "كتابة وشرح الأكواد"
+        )
+
+    with col2:
+
+        st.info(
+            "🤖 AI\n\n"
+            "الذكاء الاصطناعي"
+        )
+
+    with col3:
+
+        st.info(
+            "🐞 Debugging\n\n"
+            "حل مشاكل الكود"
+        )
 
 
 # =========================================================
@@ -567,11 +294,11 @@ for message in st.session_state.messages:
 
 
 # =========================================================
-# CHAT INPUT
+# TEXT INPUT
 # =========================================================
 
 prompt = st.chat_input(
-    "اكتب رسالتك إلى CodeBox AI..."
+    "اكتب رسالتك هنا..."
 )
 
 
@@ -579,69 +306,67 @@ prompt = st.chat_input(
 # VOICE INPUT
 # =========================================================
 
-with st.expander(
-    "🎙️ التحدث مع المساعد",
-    expanded=False,
-):
+st.divider()
 
-    st.caption(
-        "سجل رسالتك الصوتية وسيتم تحويلها إلى نص."
-    )
+st.subheader(
+    "🎤 التحدث مع المساعد"
+)
 
-    audio_value = st.audio_input(
-        "تسجيل رسالة"
-    )
+audio_value = st.audio_input(
+    "اضغط للتسجيل"
+)
 
-    voice_text = None
+voice_text = None
 
-    if audio_value is not None:
 
-        try:
+if audio_value is not None:
 
-            recognizer = sr.Recognizer()
+    try:
 
-            audio_bytes = audio_value.getvalue()
+        recognizer = sr.Recognizer()
 
-            audio_file = io.BytesIO(
-                audio_bytes
+        audio_bytes = audio_value.getvalue()
+
+        audio_file = io.BytesIO(
+            audio_bytes
+        )
+
+        with sr.AudioFile(audio_file) as source:
+
+            audio_data = recognizer.record(
+                source
             )
 
-            with sr.AudioFile(audio_file) as source:
+        with st.spinner(
+            "🎧 جاري تحويل الصوت إلى نص..."
+        ):
 
-                audio_data = recognizer.record(
-                    source
-                )
-
-            with st.spinner(
-                "جاري تحويل الصوت إلى نص..."
-            ):
-
-                voice_text = recognizer.recognize_google(
-                    audio_data,
-                    language="ar-EG",
-                )
-
-            st.success(
-                f"تم التعرف على: {voice_text}"
+            voice_text = recognizer.recognize_google(
+                audio_data,
+                language="ar-EG"
             )
 
-        except sr.UnknownValueError:
+        st.success(
+            f"النص: {voice_text}"
+        )
 
-            st.error(
-                "لم أتمكن من فهم التسجيل."
-            )
+    except sr.UnknownValueError:
 
-        except sr.RequestError:
+        st.error(
+            "لم أتمكن من فهم التسجيل."
+        )
 
-            st.error(
-                "خدمة تحويل الصوت غير متاحة حاليًا."
-            )
+    except sr.RequestError:
 
-        except Exception as e:
+        st.error(
+            "حدثت مشكلة في خدمة تحويل الصوت."
+        )
 
-            st.error(
-                f"حدث خطأ:\n{e}"
-            )
+    except Exception as e:
+
+        st.error(
+            f"حدث خطأ:\n{e}"
+        )
 
 
 # =========================================================
@@ -663,15 +388,13 @@ elif prompt:
 
 if user_message:
 
-    # Add user message
     st.session_state.messages.append(
         {
             "role": "user",
-            "content": user_message,
+            "content": user_message
         }
     )
 
-    # Show user message
     with st.chat_message("user"):
 
         st.markdown(
@@ -679,11 +402,10 @@ if user_message:
         )
 
 
-    # Generate AI response
     with st.chat_message("assistant"):
 
         with st.spinner(
-            "CodeBox AI يفكر..."
+            "🤖 CodeBox AI يفكر..."
         ):
 
             try:
@@ -699,18 +421,20 @@ if user_message:
                     response
                 )
 
-                # Save response
                 st.session_state.messages.append(
                     {
                         "role": "assistant",
-                        "content": response,
+                        "content": response
                     }
                 )
 
                 st.session_state.last_response = response
 
 
-                # Voice response
+                # =============================================
+                # SPEAK RESPONSE
+                # =============================================
+
                 if st.session_state.speaker:
 
                     try:
@@ -740,26 +464,30 @@ if user_message:
                 st.session_state.messages.append(
                     {
                         "role": "assistant",
-                        "content": error_message,
+                        "content": error_message
                     }
                 )
 
 
 # =========================================================
-# RESPONSE CONTROLS
+# AUDIO CONTROLS
 # =========================================================
 
 if st.session_state.last_response:
 
     st.divider()
 
+    st.subheader(
+        "🔊 التحكم في الرد"
+    )
+
     col1, col2 = st.columns(2)
 
     with col1:
 
         if st.button(
-            "▶  تشغيل آخر رد",
-            use_container_width=True,
+            "▶️ تشغيل آخر رد",
+            use_container_width=True
         ):
 
             if st.session_state.speaker:
@@ -780,8 +508,8 @@ if st.session_state.last_response:
     with col2:
 
         if st.button(
-            "■  إيقاف الرد",
-            use_container_width=True,
+            "⏹️ إيقاف الصوت",
+            use_container_width=True
         ):
 
             if st.session_state.speaker:
@@ -798,11 +526,8 @@ if st.session_state.last_response:
 # FOOTER
 # =========================================================
 
-st.markdown(
-    """
-    <div class="mini-footer">
-        CodeBox AI · Personal Assistant · Powered by Gemini
-    </div>
-    """,
-    unsafe_allow_html=True,
+st.divider()
+
+st.caption(
+    "CodeBox AI • Personal Assistant • Gemini"
 )
