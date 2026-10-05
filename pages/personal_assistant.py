@@ -11,8 +11,9 @@ from utils.speaker import Speaker
 # =========================================================
 # إعداد الصفحة
 # =========================================================
+
 st.set_page_config(
-    page_title="CodeBox AI",
+    page_title="CodeBox Personal Assistant",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -20,8 +21,9 @@ st.set_page_config(
 
 
 # =========================================================
-# CSS - تنسيق Streamlit فقط
+# تنسيق الصفحة
 # =========================================================
+
 st.markdown(
     """
     <style>
@@ -70,12 +72,13 @@ st.markdown(
         margin-top: 10px;
         margin-bottom: 5px;
 
-        background: linear-gradient(
-            90deg,
-            #7c3aed,
-            #06b6d4,
-            #8b5cf6
-        );
+        background:
+            linear-gradient(
+                90deg,
+                #7c3aed,
+                #06b6d4,
+                #8b5cf6
+            );
 
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -173,6 +176,7 @@ st.markdown(
     }
 
     [data-testid="stChatInput"] textarea:focus {
+
         border-color:
             #06b6d4 !important;
 
@@ -185,6 +189,7 @@ st.markdown(
     }
 
     .stButton > button {
+
         border-radius: 14px;
         min-height: 44px;
         font-weight: 700;
@@ -207,7 +212,9 @@ st.markdown(
     }
 
     .stButton > button:hover {
-        transform: translateY(-3px);
+
+        transform:
+            translateY(-3px);
 
         border-color:
             rgba(6,182,212,0.65);
@@ -218,6 +225,7 @@ st.markdown(
     }
 
     .stButton > button:active {
+
         transform:
             translateY(0px)
             scale(0.98);
@@ -225,6 +233,7 @@ st.markdown(
 
     h2,
     h3 {
+
         background:
             linear-gradient(
                 90deg,
@@ -239,6 +248,7 @@ st.markdown(
     }
 
     section[data-testid="stSidebar"] {
+
         background:
             linear-gradient(
                 180deg,
@@ -256,6 +266,7 @@ st.markdown(
     }
 
     .sidebar-title {
+
         text-align: center;
         font-size: 28px;
         font-weight: 900;
@@ -272,6 +283,7 @@ st.markdown(
     }
 
     .sidebar-subtitle {
+
         text-align: center;
         font-size: 13px;
         opacity: 0.65;
@@ -279,6 +291,7 @@ st.markdown(
     }
 
     section[data-testid="stSidebar"] .stButton > button {
+
         background:
             rgba(255,255,255,0.06);
 
@@ -290,6 +303,7 @@ st.markdown(
     }
 
     section[data-testid="stSidebar"] .stButton > button:hover {
+
         background:
             linear-gradient(
                 90deg,
@@ -306,6 +320,7 @@ st.markdown(
     }
 
     [data-testid="stAlert"] {
+
         border-radius: 15px;
 
         border:
@@ -318,6 +333,7 @@ st.markdown(
     }
 
     .app-footer {
+
         text-align: center;
         margin-top: 35px;
         padding: 15px;
@@ -335,6 +351,7 @@ st.markdown(
     }
 
     ::-webkit-scrollbar-thumb {
+
         background:
             linear-gradient(
                 180deg,
@@ -354,6 +371,7 @@ st.markdown(
 # =========================================================
 # Session State
 # =========================================================
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -370,56 +388,75 @@ if "speaker" not in st.session_state:
 # =========================================================
 # تشغيل Gemini
 # =========================================================
+
 if st.session_state.assistant is None:
 
     try:
+
         st.session_state.assistant = GeminiAI()
 
     except Exception as error:
-        st.error("❌ حدث خطأ أثناء تشغيل Gemini.")
-        st.code(str(error))
+
+        st.error(
+            "❌ حدث خطأ أثناء تشغيل Gemini."
+        )
+
+        st.code(
+            str(error)
+        )
+
         st.stop()
 
 
 # =========================================================
-# تشغيل الصوت
+# تشغيل نظام الصوت
 # =========================================================
+
 if st.session_state.speaker is None:
 
     try:
+
         st.session_state.speaker = Speaker()
 
     except Exception:
+
         st.session_state.speaker = None
 
 
 # =========================================================
-# العنوان
+# العنوان الرئيسي
 # =========================================================
+
 st.markdown(
-    '<div class="main-title">🤖 CodeBox AI</div>',
+    '<div class="main-title">'
+    '🤖 CodeBox Personal Assistant'
+    '</div>',
     unsafe_allow_html=True,
 )
 
 st.markdown(
     '<div class="main-subtitle">'
-    'مساعدك الذكي للبرمجة والتكنولوجيا والتعلم'
+    'مساعدك الشخصي الذكي'
     '</div>',
     unsafe_allow_html=True,
 )
 
 
 # =========================================================
-# الحالة
+# حالة المساعد
 # =========================================================
+
 if st.session_state.speaker:
 
     try:
+
         is_playing = (
-            st.session_state.speaker.is_playing()
+            st.session_state.speaker
+            .is_playing()
         )
 
     except Exception:
+
         is_playing = False
 
     if is_playing:
@@ -435,7 +472,7 @@ if st.session_state.speaker:
 
         st.markdown(
             '<div class="status">'
-            '🟢 CodeBox AI جاهز'
+            '🟢 المساعد الشخصي جاهز'
             '</div>',
             unsafe_allow_html=True,
         )
@@ -444,7 +481,7 @@ else:
 
     st.markdown(
         '<div class="status">'
-        '🟢 CodeBox AI جاهز'
+        '🟢 المساعد الشخصي جاهز'
         '</div>',
         unsafe_allow_html=True,
     )
@@ -454,22 +491,24 @@ st.divider()
 
 
 # =========================================================
-# شريط الأخبار المتحرك
+# شريط الأخبار
+# يظهر فقط قبل بداية المحادثة
 # =========================================================
+
 if not st.session_state.messages:
 
-    st.subheader("📺 CodeBox News")
-
     news = [
-        "🤖 CodeBox AI جاهز لاستقبال أسئلتك",
-        "🐍 Python • C++ • Java • JavaScript • SQL",
-        "🐞 Debugging • Artificial Intelligence • Programming",
-        "🎤 يمكنك التحدث مع CodeBox AI باستخدام صوتك",
-        "🔊 CodeBox AI يستطيع قراءة الردود صوتيًا",
-        "💡 اكتب سؤالك في الأسفل وابدأ المحادثة",
+        "🤖 CodeBox Personal Assistant جاهز لمساعدتك",
+        "💻 اسأل عن البرمجة والتكنولوجيا",
+        "🐍 Python • C++ • Java • JavaScript",
+        "🧠 Artificial Intelligence",
+        "🐞 Debugging وحل مشاكل الكود",
+        "🎤 تحدث مع المساعد باستخدام صوتك",
+        "🔊 المساعد يستطيع الرد عليك بالصوت",
+        "💡 اكتب سؤالك بالأسفل وابدأ الآن",
     ]
 
-    ticker = st.empty()
+    news_placeholder = st.empty()
 
     for _ in range(100):
 
@@ -478,8 +517,8 @@ if not st.session_state.messages:
             if st.session_state.messages:
                 break
 
-            ticker.info(
-                f"🔴 عاجل  |  {item}"
+            news_placeholder.info(
+                f"🔴 NEWS  |  {item}"
             )
 
             time.sleep(1.5)
@@ -489,8 +528,9 @@ if not st.session_state.messages:
 
 
 # =========================================================
-# المحادثة
+# عرض المحادثة السابقة
 # =========================================================
+
 for message in st.session_state.messages:
 
     role = message["role"]
@@ -512,22 +552,30 @@ for message in st.session_state.messages:
 
 
 # =========================================================
-# الصوت
+# المساعد الصوتي
 # =========================================================
+
+st.divider()
+
 st.subheader(
-    "🎤 التحدث مع CodeBox AI"
+    "🎤 تحدث مع المساعد الشخصي"
 )
 
 st.caption(
-    "سجل رسالتك الصوتية وسيتم تحويلها إلى نص."
+    "اضغط على التسجيل وتحدث، وسيتم تحويل كلامك إلى رسالة."
 )
 
+
 audio_value = st.audio_input(
-    "اضغط هنا لتسجيل رسالة"
+    "🎙️ تسجيل رسالة صوتية"
 )
 
 voice_text = None
 
+
+# =========================================================
+# تحويل الصوت إلى نص
+# =========================================================
 
 if audio_value is not None:
 
@@ -548,7 +596,9 @@ if audio_value is not None:
         ) as source:
 
             audio_data = (
-                recognizer.record(source)
+                recognizer.record(
+                    source
+                )
             )
 
         voice_text = (
@@ -565,7 +615,7 @@ if audio_value is not None:
     except sr.UnknownValueError:
 
         st.warning(
-            "❓ لم أستطع فهم التسجيل."
+            "❓ لم أستطع فهم التسجيل الصوتي."
         )
 
     except sr.RequestError as error:
@@ -590,15 +640,19 @@ if audio_value is not None:
 
 
 # =========================================================
-# إدخال الرسالة
+# الكتابة
 # =========================================================
+
 prompt = st.chat_input(
-    "💬 اكتب رسالتك إلى CodeBox AI..."
+    "💬 اكتب رسالتك إلى المساعد الشخصي..."
 )
 
 
-user_message = None
+# =========================================================
+# تحديد الرسالة
+# =========================================================
 
+user_message = None
 
 if voice_text:
 
@@ -610,19 +664,24 @@ elif prompt:
 
 
 # =========================================================
-# إرسال الرسالة
+# معالجة الرسالة
 # =========================================================
+
 if user_message:
 
+    # إيقاف الصوت السابق
     if st.session_state.speaker:
 
         try:
+
             st.session_state.speaker.stop()
 
         except Exception:
+
             pass
 
 
+    # حفظ رسالة المستخدم
     st.session_state.messages.append(
         {
             "role": "user",
@@ -631,6 +690,7 @@ if user_message:
     )
 
 
+    # عرض رسالة المستخدم
     with st.chat_message(
         "user",
         avatar="👤",
@@ -641,19 +701,21 @@ if user_message:
         )
 
 
+    # رد المساعد
     with st.chat_message(
         "assistant",
         avatar="🤖",
     ):
 
         with st.spinner(
-            "🤖 CodeBox AI يفكر..."
+            "🤖 المساعد الشخصي يفكر..."
         ):
 
             try:
 
                 response = (
-                    st.session_state.assistant
+                    st.session_state
+                    .assistant
                     .generate_response(
                         user_message
                     )
@@ -666,11 +728,13 @@ if user_message:
                     + str(error)
                 )
 
+
         st.markdown(
             response
         )
 
 
+    # حفظ الرد
     st.session_state.messages.append(
         {
             "role": "assistant",
@@ -681,6 +745,10 @@ if user_message:
     st.session_state.last_response = response
 
 
+    # =====================================================
+    # قراءة الرد بالصوت
+    # =====================================================
+
     if st.session_state.speaker:
 
         try:
@@ -690,20 +758,22 @@ if user_message:
             )
 
         except Exception:
+
             pass
 
 
 # =========================================================
 # التحكم في الصوت
 # =========================================================
+
 st.divider()
 
 st.subheader(
-    "🔊 التحكم في الصوت"
+    "🔊 التحكم في المساعد الصوتي"
 )
 
 st.caption(
-    "تحكم في صوت آخر رد من CodeBox AI."
+    "تحكم في صوت آخر رد من المساعد الشخصي."
 )
 
 
@@ -712,6 +782,7 @@ audio_col1, audio_col2, audio_col3 = (
 )
 
 
+# تشغيل
 with audio_col1:
 
     if st.button(
@@ -731,7 +802,7 @@ with audio_col1:
                 )
 
                 st.toast(
-                    "🔊 يتم تشغيل آخر رد"
+                    "🔊 يتم تشغيل الرد"
                 )
 
             except Exception as error:
@@ -751,6 +822,7 @@ with audio_col1:
             )
 
 
+# إيقاف
 with audio_col2:
 
     if st.button(
@@ -774,7 +846,12 @@ with audio_col2:
                     "❌ حدث خطأ أثناء إيقاف الصوت."
                 )
 
+                st.code(
+                    str(error)
+                )
 
+
+# محادثة جديدة
 with audio_col3:
 
     if st.button(
@@ -785,9 +862,11 @@ with audio_col3:
         if st.session_state.speaker:
 
             try:
+
                 st.session_state.speaker.stop()
 
             except Exception:
+
                 pass
 
 
@@ -797,9 +876,11 @@ with audio_col3:
 
 
         try:
+
             st.session_state.assistant.reset_chat()
 
         except Exception:
+
             pass
 
 
@@ -813,6 +894,7 @@ with audio_col3:
 # =========================================================
 # Sidebar
 # =========================================================
+
 with st.sidebar:
 
     st.markdown(
@@ -829,8 +911,11 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
+
     st.divider()
 
+
+    # الحالة
     st.subheader(
         "📊 حالة المساعد"
     )
@@ -871,6 +956,8 @@ with st.sidebar:
 
     st.divider()
 
+
+    # التحكم
     st.subheader(
         "🎛️ التحكم السريع"
     )
@@ -917,9 +1004,11 @@ with st.sidebar:
         if st.session_state.speaker:
 
             try:
+
                 st.session_state.speaker.stop()
 
             except Exception:
+
                 pass
 
 
@@ -931,9 +1020,11 @@ with st.sidebar:
         if st.session_state.speaker:
 
             try:
+
                 st.session_state.speaker.stop()
 
             except Exception:
+
                 pass
 
 
@@ -943,9 +1034,11 @@ with st.sidebar:
 
 
         try:
+
             st.session_state.assistant.reset_chat()
 
         except Exception:
+
             pass
 
 
@@ -958,24 +1051,54 @@ with st.sidebar:
 
     st.divider()
 
+
+    # مميزات المساعد
     st.subheader(
         "✨ المميزات"
     )
 
-    st.write("🐍 Python")
-    st.write("💻 C++ / Java")
-    st.write("🌐 HTML / CSS / JavaScript")
-    st.write("🗄️ SQL")
-    st.write("🐞 Debugging")
-    st.write("🎤 Voice Input")
-    st.write("🔊 Text To Speech")
-    st.write("🧠 Gemini AI")
+    st.write(
+        "💬 محادثة ذكية"
+    )
+
+    st.write(
+        "🎤 التحدث بالصوت"
+    )
+
+    st.write(
+        "🔊 الرد الصوتي"
+    )
+
+    st.write(
+        "🧠 Gemini AI"
+    )
+
+    st.write(
+        "💻 مساعدة في البرمجة"
+    )
+
+    st.write(
+        "🐞 حل أخطاء الكود"
+    )
+
+    st.write(
+        "📚 مساعدة في التعلم"
+    )
+
+    st.write(
+        "🌐 عربي + English"
+    )
 
 
     st.divider()
 
+
     st.caption(
         "🚀 CodeBox"
+    )
+
+    st.caption(
+        "Personal Assistant"
     )
 
     st.caption(
@@ -986,9 +1109,10 @@ with st.sidebar:
 # =========================================================
 # Footer
 # =========================================================
+
 st.markdown(
     '<div class="app-footer">'
-    '🤖 CodeBox AI • Powered by Gemini'
+    '🤖 CodeBox Personal Assistant • Powered by Gemini'
     '</div>',
     unsafe_allow_html=True,
 )
