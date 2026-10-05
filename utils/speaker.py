@@ -5,22 +5,37 @@ import tempfile
 import threading
 
 import edge_tts
-import pygame
+
+# pygame is optional
+try:
+    import pygame
+    PYGAME_AVAILABLE = True
+except ImportError:
+    pygame = None
+    PYGAME_AVAILABLE = False
 
 
 class Speaker:
     """Professional Text-To-Speech system for CodeBox."""
 
     def __init__(self):
-        pygame.mixer.init()
-
         self.arabic_voice = "ar-EG-SalmaNeural"
         self.english_voice = "en-US-JennyNeural"
 
         self.stop_requested = False
         self.is_speaking = False
-
         self.thread = None
+
+        # Initialize pygame only if available
+        if PYGAME_AVAILABLE:
+            try:
+                pygame.mixer.init()
+            except Exception:
+                self._pygame_ready = False
+            else:
+                self._pygame_ready = True
+        else:
+            self._pygame_ready = False
 
     # ==========================================
     # Clean Text
@@ -31,7 +46,6 @@ class Speaker:
         if not text:
             return ""
 
-        # Remove code blocks
         text = re.sub(
             r"```.*?```",
             "",
@@ -39,13 +53,11 @@ class Speaker:
             flags=re.DOTALL,
         )
 
-        # Remove bold / italic Markdown
         text = text.replace("**", "")
         text = text.replace("__", "")
         text = text.replace("*", "")
         text = text.replace("_", " ")
 
-        # Remove headings
         text = re.sub(
             r"^#+\s*",
             "",
@@ -53,17 +65,14 @@ class Speaker:
             flags=re.MULTILINE,
         )
 
-        # Convert Markdown links to text
         text = re.sub(
             r"\[([^\]]+)\]\([^)]+\)",
             r"\1",
             text,
         )
 
-        # Remove inline code markers
         text = text.replace("`", "")
 
-        # Remove bullet symbols
         text = re.sub(
             r"^\s*[-•]\s*",
             "",
@@ -71,7 +80,6 @@ class Speaker:
             flags=re.MULTILINE,
         )
 
-        # Remove excessive spaces
         text = re.sub(
             r"\s+",
             " ",
@@ -130,7 +138,12 @@ class Speaker:
         if not text:
             return
 
-        # Stop previous speech
+        # Streamlit Cloud / server
+        # does not have local audio playback.
+        if not self._pygame_ready:
+            print("Audio playback is unavailable in this environment.")
+            return
+
         self.stop()
 
         self.stop_requested = False
@@ -155,13 +168,11 @@ class Speaker:
 
             self.is_speaking = True
 
-            # Select voice
             if self.is_arabic(text):
                 voice = self.arabic_voice
             else:
                 voice = self.english_voice
 
-            # Temporary MP3
             with tempfile.NamedTemporaryFile(
                 suffix=".mp3",
                 delete=False,
@@ -169,7 +180,6 @@ class Speaker:
 
                 temp_file = file.name
 
-            # Generate audio
             asyncio.run(
                 self._generate_audio(
                     text,
@@ -181,18 +191,13 @@ class Speaker:
             if self.stop_requested:
                 return
 
-            # Load audio
-            pygame.mixer.music.load(
-                temp_file
-            )
+            pygame.mixer.music.load(temp_file)
 
             if self.stop_requested:
                 return
 
-            # Play
             pygame.mixer.music.play()
 
-            # Monitor playback
             while pygame.mixer.music.get_busy():
 
                 if self.stop_requested:
@@ -205,9 +210,7 @@ class Speaker:
 
         except Exception as error:
 
-            print(
-                f"Speech Error: {error}"
-            )
+            print(f"Speech Error: {error}")
 
         finally:
 
@@ -219,10 +222,7 @@ class Speaker:
             except Exception:
                 pass
 
-            if (
-                temp_file
-                and os.path.exists(temp_file)
-            ):
+            if temp_file and os.path.exists(temp_file):
 
                 try:
                     os.remove(temp_file)
@@ -237,6 +237,10 @@ class Speaker:
     def stop(self):
 
         self.stop_requested = True
+
+        if not self._pygame_ready:
+            self.is_speaking = False
+            return
 
         try:
             pygame.mixer.music.stop()
@@ -253,12 +257,13 @@ class Speaker:
 
     def is_playing(self):
 
-        try:
+        if not self._pygame_ready:
+            return False
 
+        try:
             return pygame.mixer.music.get_busy()
 
         except Exception:
-
             return False
 
     # ==========================================
@@ -268,6 +273,9 @@ class Speaker:
     def cleanup(self):
 
         self.stop()
+
+        if not self._pygame_ready:
+            return
 
         try:
             pygame.mixer.quit()
