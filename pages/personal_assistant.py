@@ -1,5 +1,4 @@
 import io
-import time
 
 import streamlit as st
 import speech_recognition as sr
@@ -21,7 +20,7 @@ st.set_page_config(
 
 
 # =========================================================
-# تنسيق الصفحة
+# CSS
 # =========================================================
 
 st.markdown(
@@ -109,10 +108,6 @@ st.markdown(
             rgba(124,58,237,0.35);
 
         font-size: 13px;
-
-        box-shadow:
-            0 0 20px
-            rgba(124,58,237,0.08);
     }
 
     hr {
@@ -160,7 +155,7 @@ st.markdown(
     }
 
     [data-testid="stChatInput"] {
-        margin-top: 10px;
+        margin-top: 15px;
     }
 
     [data-testid="stChatInput"] textarea {
@@ -169,27 +164,18 @@ st.markdown(
         border:
             1px solid
             rgba(124,58,237,0.35) !important;
-
-        transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
     }
 
     [data-testid="stChatInput"] textarea:focus {
-
         border-color:
             #06b6d4 !important;
 
         box-shadow:
             0 0 0 2px
-            rgba(6,182,212,0.12),
-
-            0 0 20px
             rgba(6,182,212,0.12);
     }
 
     .stButton > button {
-
         border-radius: 14px;
         min-height: 44px;
         font-weight: 700;
@@ -204,17 +190,10 @@ st.markdown(
                 rgba(124,58,237,0.10),
                 rgba(6,182,212,0.08)
             );
-
-        transition:
-            transform 0.18s ease,
-            box-shadow 0.18s ease,
-            border-color 0.18s ease;
     }
 
     .stButton > button:hover {
-
-        transform:
-            translateY(-3px);
+        transform: translateY(-2px);
 
         border-color:
             rgba(6,182,212,0.65);
@@ -224,16 +203,8 @@ st.markdown(
             rgba(6,182,212,0.15);
     }
 
-    .stButton > button:active {
-
-        transform:
-            translateY(0px)
-            scale(0.98);
-    }
-
     h2,
     h3 {
-
         background:
             linear-gradient(
                 90deg,
@@ -248,7 +219,6 @@ st.markdown(
     }
 
     section[data-testid="stSidebar"] {
-
         background:
             linear-gradient(
                 180deg,
@@ -266,7 +236,6 @@ st.markdown(
     }
 
     .sidebar-title {
-
         text-align: center;
         font-size: 28px;
         font-weight: 900;
@@ -283,15 +252,12 @@ st.markdown(
     }
 
     .sidebar-subtitle {
-
         text-align: center;
         font-size: 13px;
         opacity: 0.65;
-        margin-bottom: 20px;
     }
 
     section[data-testid="stSidebar"] .stButton > button {
-
         background:
             rgba(255,255,255,0.06);
 
@@ -302,30 +268,8 @@ st.markdown(
         color: white;
     }
 
-    section[data-testid="stSidebar"] .stButton > button:hover {
-
-        background:
-            linear-gradient(
-                90deg,
-                rgba(124,58,237,0.35),
-                rgba(6,182,212,0.25)
-            );
-
-        border-color:
-            rgba(34,211,238,0.6);
-
-        box-shadow:
-            0 5px 20px
-            rgba(6,182,212,0.12);
-    }
-
     [data-testid="stAlert"] {
-
         border-radius: 15px;
-
-        border:
-            1px solid
-            rgba(128,128,128,0.15);
     }
 
     [data-testid="stAudioInput"] {
@@ -333,33 +277,12 @@ st.markdown(
     }
 
     .app-footer {
-
         text-align: center;
         margin-top: 35px;
         padding: 15px;
 
         font-size: 12px;
         opacity: 0.45;
-    }
-
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-
-        background:
-            linear-gradient(
-                180deg,
-                #7c3aed,
-                #06b6d4
-            );
-
-        border-radius: 20px;
     }
 
     </style>
@@ -384,47 +307,41 @@ if "assistant" not in st.session_state:
 if "speaker" not in st.session_state:
     st.session_state.speaker = None
 
+if "news_index" not in st.session_state:
+    st.session_state.news_index = 0
+
 
 # =========================================================
-# تشغيل Gemini
+# Gemini
 # =========================================================
 
 if st.session_state.assistant is None:
 
     try:
-
         st.session_state.assistant = GeminiAI()
 
     except Exception as error:
 
-        st.error(
-            "❌ حدث خطأ أثناء تشغيل Gemini."
-        )
-
-        st.code(
-            str(error)
-        )
-
+        st.error("❌ حدث خطأ أثناء تشغيل Gemini.")
+        st.code(str(error))
         st.stop()
 
 
 # =========================================================
-# تشغيل نظام الصوت
+# Speaker
 # =========================================================
 
 if st.session_state.speaker is None:
 
     try:
-
         st.session_state.speaker = Speaker()
 
     except Exception:
-
         st.session_state.speaker = None
 
 
 # =========================================================
-# العنوان الرئيسي
+# Header
 # =========================================================
 
 st.markdown(
@@ -443,23 +360,20 @@ st.markdown(
 
 
 # =========================================================
-# حالة المساعد
+# Status
 # =========================================================
 
 if st.session_state.speaker:
 
     try:
-
-        is_playing = (
-            st.session_state.speaker
-            .is_playing()
+        playing = (
+            st.session_state.speaker.is_playing()
         )
 
     except Exception:
+        playing = False
 
-        is_playing = False
-
-    if is_playing:
+    if playing:
 
         st.markdown(
             '<div class="status">'
@@ -492,43 +406,35 @@ st.divider()
 
 # =========================================================
 # شريط الأخبار
-# يظهر فقط قبل بداية المحادثة
 # =========================================================
 
 if not st.session_state.messages:
 
     news = [
-        "🤖 CodeBox Personal Assistant جاهز لمساعدتك",
-        "💻 اسأل عن البرمجة والتكنولوجيا",
+        "🤖 CodeBox AI جاهز لمساعدتك",
+        "💻 اسألني عن البرمجة والتكنولوجيا",
         "🐍 Python • C++ • Java • JavaScript",
         "🧠 Artificial Intelligence",
         "🐞 Debugging وحل مشاكل الكود",
-        "🎤 تحدث مع المساعد باستخدام صوتك",
-        "🔊 المساعد يستطيع الرد عليك بالصوت",
-        "💡 اكتب سؤالك بالأسفل وابدأ الآن",
+        "🎤 تحدث مع المساعد بالصوت",
+        "🔊 المساعد يستطيع الرد عليك صوتيًا",
+        "💡 اكتب رسالتك الآن",
     ]
 
-    news_placeholder = st.empty()
+    current_news = news[
+        st.session_state.news_index
+        % len(news)
+    ]
 
-    for _ in range(100):
+    st.info(
+        f"🔴 LIVE  |  {current_news}"
+    )
 
-        for item in news:
-
-            if st.session_state.messages:
-                break
-
-            news_placeholder.info(
-                f"🔴 NEWS  |  {item}"
-            )
-
-            time.sleep(1.5)
-
-        if st.session_state.messages:
-            break
+    st.session_state.news_index += 1
 
 
 # =========================================================
-# عرض المحادثة السابقة
+# المحادثة
 # =========================================================
 
 for message in st.session_state.messages:
@@ -552,30 +458,34 @@ for message in st.session_state.messages:
 
 
 # =========================================================
-# المساعد الصوتي
+# إدخال الرسائل
 # =========================================================
 
-st.divider()
+st.subheader("💬 المحادثة")
+
+prompt = st.chat_input(
+    "اكتب رسالتك إلى المساعد الشخصي..."
+)
+
+
+# =========================================================
+# Voice Input
+# =========================================================
 
 st.subheader(
-    "🎤 تحدث مع المساعد الشخصي"
+    "🎤 التحدث مع المساعد"
 )
 
 st.caption(
-    "اضغط على التسجيل وتحدث، وسيتم تحويل كلامك إلى رسالة."
+    "يمكنك تسجيل رسالة صوتية وسيتم تحويلها إلى نص."
 )
 
-
 audio_value = st.audio_input(
-    "🎙️ تسجيل رسالة صوتية"
+    "🎙️ تسجيل رسالة"
 )
 
 voice_text = None
 
-
-# =========================================================
-# تحويل الصوت إلى نص
-# =========================================================
 
 if audio_value is not None:
 
@@ -595,10 +505,8 @@ if audio_value is not None:
             audio_file
         ) as source:
 
-            audio_data = (
-                recognizer.record(
-                    source
-                )
+            audio_data = recognizer.record(
+                source
             )
 
         voice_text = (
@@ -615,7 +523,7 @@ if audio_value is not None:
     except sr.UnknownValueError:
 
         st.warning(
-            "❓ لم أستطع فهم التسجيل الصوتي."
+            "❓ لم أستطع فهم التسجيل."
         )
 
     except sr.RequestError as error:
@@ -640,16 +548,7 @@ if audio_value is not None:
 
 
 # =========================================================
-# الكتابة
-# =========================================================
-
-prompt = st.chat_input(
-    "💬 اكتب رسالتك إلى المساعد الشخصي..."
-)
-
-
-# =========================================================
-# تحديد الرسالة
+# اختيار الرسالة
 # =========================================================
 
 user_message = None
@@ -664,24 +563,22 @@ elif prompt:
 
 
 # =========================================================
-# معالجة الرسالة
+# إرسال الرسالة إلى Gemini
 # =========================================================
 
 if user_message:
 
-    # إيقاف الصوت السابق
+    # إيقاف الصوت القديم
     if st.session_state.speaker:
 
         try:
-
             st.session_state.speaker.stop()
 
         except Exception:
-
             pass
 
 
-    # حفظ رسالة المستخدم
+    # إضافة رسالة المستخدم
     st.session_state.messages.append(
         {
             "role": "user",
@@ -701,7 +598,7 @@ if user_message:
         )
 
 
-    # رد المساعد
+    # رد Gemini
     with st.chat_message(
         "assistant",
         avatar="🤖",
@@ -714,8 +611,7 @@ if user_message:
             try:
 
                 response = (
-                    st.session_state
-                    .assistant
+                    st.session_state.assistant
                     .generate_response(
                         user_message
                     )
@@ -745,10 +641,7 @@ if user_message:
     st.session_state.last_response = response
 
 
-    # =====================================================
-    # قراءة الرد بالصوت
-    # =====================================================
-
+    # تشغيل الرد صوتيًا
     if st.session_state.speaker:
 
         try:
@@ -758,7 +651,6 @@ if user_message:
             )
 
         except Exception:
-
             pass
 
 
@@ -769,20 +661,14 @@ if user_message:
 st.divider()
 
 st.subheader(
-    "🔊 التحكم في المساعد الصوتي"
+    "🔊 التحكم في الصوت"
 )
-
-st.caption(
-    "تحكم في صوت آخر رد من المساعد الشخصي."
-)
-
 
 audio_col1, audio_col2, audio_col3 = (
     st.columns(3)
 )
 
 
-# تشغيل
 with audio_col1:
 
     if st.button(
@@ -802,7 +688,7 @@ with audio_col1:
                 )
 
                 st.toast(
-                    "🔊 يتم تشغيل الرد"
+                    "🔊 يتم تشغيل آخر رد"
                 )
 
             except Exception as error:
@@ -822,7 +708,6 @@ with audio_col1:
             )
 
 
-# إيقاف
 with audio_col2:
 
     if st.button(
@@ -851,7 +736,6 @@ with audio_col2:
                 )
 
 
-# محادثة جديدة
 with audio_col3:
 
     if st.button(
@@ -862,27 +746,21 @@ with audio_col3:
         if st.session_state.speaker:
 
             try:
-
                 st.session_state.speaker.stop()
 
             except Exception:
-
                 pass
 
-
         st.session_state.messages = []
-
         st.session_state.last_response = None
-
+        st.session_state.news_index = 0
 
         try:
 
             st.session_state.assistant.reset_chat()
 
         except Exception:
-
             pass
-
 
         st.toast(
             "✨ بدأت محادثة جديدة"
@@ -911,15 +789,11 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-
     st.divider()
 
-
-    # الحالة
     st.subheader(
         "📊 حالة المساعد"
     )
-
 
     if st.session_state.speaker:
 
@@ -933,7 +807,6 @@ with st.sidebar:
         except Exception:
 
             playing = False
-
 
         if playing:
 
@@ -956,8 +829,6 @@ with st.sidebar:
 
     st.divider()
 
-
-    # التحكم
     st.subheader(
         "🎛️ التحكم السريع"
     )
@@ -1008,7 +879,6 @@ with st.sidebar:
                 st.session_state.speaker.stop()
 
             except Exception:
-
                 pass
 
 
@@ -1020,27 +890,21 @@ with st.sidebar:
         if st.session_state.speaker:
 
             try:
-
                 st.session_state.speaker.stop()
 
             except Exception:
-
                 pass
 
-
         st.session_state.messages = []
-
         st.session_state.last_response = None
-
+        st.session_state.news_index = 0
 
         try:
 
             st.session_state.assistant.reset_chat()
 
         except Exception:
-
             pass
-
 
         st.toast(
             "✨ بدأت محادثة جديدة"
@@ -1051,47 +915,20 @@ with st.sidebar:
 
     st.divider()
 
-
-    # مميزات المساعد
     st.subheader(
         "✨ المميزات"
     )
 
-    st.write(
-        "💬 محادثة ذكية"
-    )
-
-    st.write(
-        "🎤 التحدث بالصوت"
-    )
-
-    st.write(
-        "🔊 الرد الصوتي"
-    )
-
-    st.write(
-        "🧠 Gemini AI"
-    )
-
-    st.write(
-        "💻 مساعدة في البرمجة"
-    )
-
-    st.write(
-        "🐞 حل أخطاء الكود"
-    )
-
-    st.write(
-        "📚 مساعدة في التعلم"
-    )
-
-    st.write(
-        "🌐 عربي + English"
-    )
-
+    st.write("💬 محادثة ذكية")
+    st.write("🎤 Voice Input")
+    st.write("🔊 Voice Response")
+    st.write("🧠 Gemini AI")
+    st.write("💻 Programming Assistant")
+    st.write("🐞 Debugging")
+    st.write("📚 Learning Assistant")
+    st.write("🌐 عربي + English")
 
     st.divider()
-
 
     st.caption(
         "🚀 CodeBox"
