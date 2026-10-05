@@ -19,262 +19,167 @@ st.set_page_config(
 )
 
 
-# =========================================================
-# PREMIUM CSS
-# =========================================================
+/* =========================
+   PREMIUM AI BUTTONS
+   ========================= */
 
-st.markdown(
-    """
-    <style>
+.stButton {
+    transition: all 0.25s ease;
+}
 
-    /* =========================
-       GLOBAL
-       ========================= */
+.stButton > button {
+    position: relative;
+    width: 100%;
+    min-height: 48px;
 
-    .stApp {
-        background:
-            radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.10), transparent 28%),
-            radial-gradient(circle at 85% 15%, rgba(6, 182, 212, 0.08), transparent 25%),
-            #070b12;
-        color: #e8eef7;
-    }
+    border-radius: 14px;
 
-    .block-container {
-        max-width: 1180px;
-        padding-top: 2rem;
-        padding-bottom: 5rem;
-    }
+    border: 1px solid rgba(56, 189, 248, 0.18);
 
-    header[data-testid="stHeader"] {
-        background: transparent;
-    }
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.95),
+            rgba(17, 24, 39, 0.95)
+        );
 
-    /* =========================
-       SIDEBAR
-       ========================= */
+    color: #eaf6ff;
 
-    section[data-testid="stSidebar"] {
-        background:
-            linear-gradient(
-                180deg,
-                #090e17 0%,
-                #0b111c 55%,
-                #080c13 100%
-            );
-        border-right: 1px solid rgba(255,255,255,0.06);
-    }
+    font-size: 0.95rem;
+    font-weight: 700;
 
-    section[data-testid="stSidebar"] .block-container {
-        padding-top: 1.5rem;
-    }
+    letter-spacing: 0.1px;
 
-    section[data-testid="stSidebar"] h1 {
-        font-size: 1.45rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-    }
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.04);
 
-    section[data-testid="stSidebar"] .stCaption {
-        color: #8190a5;
-    }
-
-    /* =========================
-       BUTTONS
-       ========================= */
-
-    .stButton > button {
-        width: 100%;
-        min-height: 44px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: rgba(255,255,255,0.035);
-        color: #e8eef7;
-        font-weight: 650;
-        transition:
-            transform 0.18s ease,
-            border-color 0.18s ease,
-            background 0.18s ease,
-            box-shadow 0.18s ease;
-    }
-
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        border-color: rgba(34,211,238,0.45);
-        background: rgba(34,211,238,0.08);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.20);
-    }
-
-    .stButton > button:active {
-        transform: translateY(0);
-    }
-
-    /* =========================
-       TITLE
-       ========================= */
-
-    h1 {
-        letter-spacing: -1.2px;
-    }
-
-    .hero-title {
-        font-size: 3rem;
-        font-weight: 850;
-        line-height: 1.05;
-        margin-bottom: 0.4rem;
-    }
-
-    .hero-subtitle {
-        color: #8795a9;
-        font-size: 1.05rem;
-        margin-bottom: 1.8rem;
-    }
-
-    /* =========================
-       CHAT
-       ========================= */
-
-    [data-testid="stChatMessage"] {
-        border: 1px solid rgba(255,255,255,0.055);
-        border-radius: 18px;
-        padding: 0.7rem 0.9rem;
-        margin-bottom: 0.75rem;
-        background: rgba(255,255,255,0.018);
-        transition:
-            border-color 0.2s ease,
-            background 0.2s ease,
-            transform 0.2s ease;
-    }
-
-    [data-testid="stChatMessage"]:hover {
-        border-color: rgba(34,211,238,0.16);
-        background: rgba(255,255,255,0.028);
-    }
-
-    [data-testid="stChatInput"] {
-        border-radius: 18px;
-    }
-
-    [data-testid="stChatInput"] textarea {
-        background: #0d1420 !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-        border-radius: 16px !important;
-        color: #edf4ff !important;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    [data-testid="stChatInput"] textarea:focus {
-        border-color: rgba(34,211,238,0.55) !important;
-        box-shadow: 0 0 0 3px rgba(34,211,238,0.07) !important;
-    }
-
-    /* =========================
-       EXPANDER
-       ========================= */
-
-    [data-testid="stExpander"] {
-        border: 1px solid rgba(255,255,255,0.07) !important;
-        border-radius: 16px !important;
-        background: rgba(255,255,255,0.018);
-        overflow: hidden;
-    }
-
-    [data-testid="stExpander"] summary {
-        font-weight: 700;
-    }
-
-    /* =========================
-       AUDIO
-       ========================= */
-
-    [data-testid="stAudioInput"] {
-        border-radius: 14px;
-    }
-
-    audio {
-        width: 100%;
-        border-radius: 12px;
-    }
-
-    /* =========================
-       ALERTS
-       ========================= */
-
-    [data-testid="stAlert"] {
-        border-radius: 14px;
-    }
-
-    /* =========================
-       DIVIDERS
-       ========================= */
-
-    hr {
-        border-color: rgba(255,255,255,0.06) !important;
-        margin: 1.3rem 0;
-    }
-
-    /* =========================
-       SCROLLBAR
-       ========================= */
-
-    ::-webkit-scrollbar {
-        width: 7px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: #070b12;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #1b2737;
-        border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #26364c;
-    }
-
-    /* =========================
-       MOBILE
-       ========================= */
-
-    @media (max-width: 700px) {
-
-        .block-container {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        .hero-title {
-            font-size: 2.1rem;
-        }
-
-        .hero-subtitle {
-            font-size: 0.95rem;
-        }
-
-    }
-
-    /* =========================
-       REDUCED MOTION
-       ========================= */
-
-    @media (prefers-reduced-motion: reduce) {
-
-        *,
-        *::before,
-        *::after {
-            transition: none !important;
-            animation: none !important;
-        }
-
-    }
-
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
 
 
+/* Hover */
+
+.stButton > button:hover {
+
+    transform: translateY(-3px);
+
+    border-color: rgba(34, 211, 238, 0.65);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(14, 165, 233, 0.16),
+            rgba(37, 99, 235, 0.18)
+        );
+
+    box-shadow:
+        0 10px 30px rgba(14, 165, 233, 0.18),
+        0 0 18px rgba(34, 211, 238, 0.10);
+
+    color: #ffffff;
+}
+
+
+/* Click */
+
+.stButton > button:active {
+
+    transform: scale(0.97);
+
+    box-shadow:
+        0 3px 12px rgba(14, 165, 233, 0.15);
+}
+
+
+/* Focus */
+
+.stButton > button:focus {
+
+    border-color: rgba(34, 211, 238, 0.7) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(34, 211, 238, 0.08),
+        0 0 20px rgba(34, 211, 238, 0.10) !important;
+}
+
+
+/* =========================
+   SIDEBAR BUTTONS
+   ========================= */
+
+section[data-testid="stSidebar"] .stButton > button {
+
+    min-height: 46px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.025),
+            rgba(255,255,255,0.045)
+        );
+
+    border: 1px solid rgba(255,255,255,0.07);
+
+    text-align: left;
+
+    padding-left: 16px;
+}
+
+
+section[data-testid="stSidebar"] .stButton > button:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37,99,235,0.20),
+            rgba(6,182,212,0.12)
+        );
+
+    border-color: rgba(34,211,238,0.45);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.25);
+}
+
+
+/* =========================
+   QUICK ACTION BUTTONS
+   ========================= */
+
+div[data-testid="stHorizontalBlock"] .stButton > button {
+
+    min-height: 58px;
+
+    border-radius: 16px;
+
+    font-size: 1rem;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,23,42,0.95),
+            rgba(15,30,45,0.95)
+        );
+
+    border: 1px solid rgba(56,189,248,0.12);
+}
+
+
+div[data-testid="stHorizontalBlock"] .stButton > button:hover {
+
+    transform: translateY(-5px) scale(1.01);
+
+    border-color: rgba(34,211,238,0.55);
+
+    box-shadow:
+        0 15px 35px rgba(14,165,233,0.16),
+        0 0 25px rgba(34,211,238,0.08);
+}
 # =========================================================
 # SESSION STATE
 # =========================================================
