@@ -46,4 +46,4 @@ SpeechRecognition
 google-genai
 streamlit
 edge-tts
-
+pygame
