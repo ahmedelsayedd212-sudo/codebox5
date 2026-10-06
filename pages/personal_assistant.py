@@ -1,4 +1,4 @@
-```python
+
 import io
 
 import streamlit as st
@@ -688,4 +688,3 @@ with st.sidebar:
     st.caption(
         "🚀 CodeBox"
     )
-```
