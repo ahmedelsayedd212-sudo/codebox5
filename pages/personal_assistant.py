@@ -24,27 +24,212 @@ st.set_page_config(
 # CSS
 # ==================================================
 
+
 st.markdown(
     """
     <style>
 
-    /* ==============================
-       GENERAL
-    ============================== */
+    /* =================================
+       CODEBOX DARK BACKGROUND
+    ================================= */
 
     .stApp {
+
         background:
             radial-gradient(
-                circle at 10% 10%,
-                rgba(59, 130, 246, 0.10),
+                circle at 15% 10%,
+                rgba(37, 99, 235, 0.16),
+                transparent 32%
+            ),
+
+            radial-gradient(
+                circle at 85% 15%,
+                rgba(124, 58, 237, 0.13),
                 transparent 30%
             ),
+
             radial-gradient(
-                circle at 90% 90%,
-                rgba(99, 102, 241, 0.08),
-                transparent 30%
-            );
+                circle at 50% 100%,
+                rgba(14, 116, 144, 0.10),
+                transparent 35%
+            ),
+
+            #080b14;
     }
+
+
+    /* =================================
+       MAIN AREA
+    ================================= */
+
+    .block-container {
+
+        max-width: 1200px;
+
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+
+
+    /* =================================
+       HEADER
+    ================================= */
+
+    .assistant-title {
+
+        font-size: 44px;
+        font-weight: 800;
+
+        text-align: center;
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+
+        color: #e5edff;
+    }
+
+
+    .assistant-subtitle {
+
+        text-align: center;
+
+        font-size: 18px;
+
+        color: #94a3b8;
+
+        margin-bottom: 25px;
+    }
+
+
+    /* =================================
+       CHAT
+    ================================= */
+
+    [data-testid="stChatMessage"] {
+
+        background: rgba(15, 23, 42, 0.55);
+
+        border: 1px solid rgba(
+            96,
+            165,
+            250,
+            0.10
+        );
+
+        border-radius: 16px;
+
+        margin-bottom: 10px;
+    }
+
+
+    /* =================================
+       CHAT INPUT
+    ================================= */
+
+    [data-testid="stChatInput"] {
+
+        background: #0f172a;
+
+        border: 1px solid rgba(
+            96,
+            165,
+            250,
+            0.25
+        );
+
+        border-radius: 16px;
+    }
+
+
+    /* =================================
+       BUTTONS
+    ================================= */
+
+    .stButton > button {
+
+        background: #111827;
+
+        color: #e5edff;
+
+        border: 1px solid rgba(
+            96,
+            165,
+            250,
+            0.22
+        );
+
+        border-radius: 12px;
+
+        transition: all 0.2s ease;
+    }
+
+
+    .stButton > button:hover {
+
+        background: #172554;
+
+        border-color: #3b82f6;
+
+        transform: translateY(-2px);
+    }
+
+
+    /* =================================
+       SIDEBAR
+    ================================= */
+
+    [data-testid="stSidebar"] {
+
+        background: #070a12;
+
+        border-right: 1px solid rgba(
+            96,
+            165,
+            250,
+            0.15
+        );
+    }
+
+
+    /* =================================
+       DIVIDERS
+    ================================= */
+
+    hr {
+
+        border-color: rgba(
+            148,
+            163,
+            184,
+            0.12
+        );
+    }
+
+
+    /* =================================
+       HEADINGS
+    ================================= */
+
+    h1, h2, h3 {
+
+        color: #e5edff;
+    }
+
+
+    /* =================================
+       CAPTIONS
+    ================================= */
+
+    .stCaption {
+
+        color: #94a3b8;
+    }
+
+
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
     /* ==============================
