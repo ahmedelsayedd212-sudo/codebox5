@@ -1,4 +1,5 @@
-import streamlit as st 
+```python
+import streamlit as st
 
 
 # ==================================================
@@ -14,57 +15,60 @@ st.set_page_config(
 
 
 # ==================================================
-# CSS
+# CSS ONLY
 # ==================================================
 
 st.markdown(
     """
     <style>
 
-    .main-title {
-        font-size: 52px;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 5px;
+    /* Main background */
+    .stApp {
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(80, 110, 255, 0.12),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at bottom right,
+                rgba(160, 80, 255, 0.10),
+                transparent 30%
+            );
     }
 
-    .subtitle {
-        text-align: center;
-        font-size: 20px;
-        opacity: 0.75;
-        margin-bottom: 35px;
+    /* Main container */
+    .block-container {
+        max-width: 1250px;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
     }
 
-    .welcome-box {
-        padding: 25px;
-        border-radius: 18px;
-        border: 1px solid rgba(128, 128, 128, 0.25);
-        margin-bottom: 25px;
-    }
-
-    .tool-card {
-        padding: 25px;
-        border-radius: 18px;
-        border: 1px solid rgba(128, 128, 128, 0.25);
-        margin-bottom: 20px;
-        min-height: 155px;
-    }
-
-    .tool-title {
-        font-size: 25px;
+    /* Buttons */
+    .stButton > button {
+        width: 100%;
+        border-radius: 14px;
+        min-height: 48px;
+        font-size: 15px;
         font-weight: 700;
-        margin-bottom: 8px;
+        border: 1px solid rgba(120, 130, 255, 0.25);
+        transition: 0.2s ease;
     }
 
-    .tool-description {
-        font-size: 16px;
-        opacity: 0.75;
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        border-color: rgba(120, 130, 255, 0.7);
+        box-shadow: 0 8px 25px rgba(80, 90, 180, 0.15);
     }
 
-    .section-title {
-        font-size: 30px;
-        font-weight: 750;
-        margin-bottom: 20px;
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        border-right: 1px solid rgba(128, 128, 128, 0.15);
+    }
+
+    /* Divider */
+    hr {
+        opacity: 0.15;
     }
 
     </style>
@@ -77,16 +81,10 @@ st.markdown(
 # HEADER
 # ==================================================
 
-st.markdown(
-    '<div class="main-title">💻 CodeBox</div>',
-    unsafe_allow_html=True,
-)
+st.title("💻 CodeBox")
 
-st.markdown(
-    '<div class="subtitle">'
-    'مجموعة أدوات ذكية للمبرمجين والمستخدمين في مكان واحد 🚀'
-    '</div>',
-    unsafe_allow_html=True,
+st.caption(
+    "⚡ مجموعة أدوات ذكية للمبرمجين والمستخدمين في مكان واحد"
 )
 
 st.divider()
@@ -96,30 +94,122 @@ st.divider()
 # WELCOME
 # ==================================================
 
-st.markdown(
-    '<div class="section-title">👋 أهلاً بك في CodeBox</div>',
-    unsafe_allow_html=True,
-)
+st.header("👋 أهلاً بك في CodeBox")
 
-st.markdown(
+st.info(
     """
-    <div class="welcome-box">
-
-    <h3>🚀 CodeBox</h3>
-
-    <p>
-    CodeBox عبارة عن مجموعة أدوات مفيدة للمبرمجين
-    والمستخدمين في مكان واحد.
-    </p>
-
-    <p>
-    يمكنك استخدام أدوات البرمجة، الذكاء الاصطناعي،
-    الألوان، النصوص والمزيد.
-    </p>
-
-    </div>
-    """,
-    unsafe_allow_html=True,
+    🚀 CodeBox هو مكان واحد يجمع أدوات مفيدة
+    للبرمجة والذكاء الاصطناعي والنصوص والألوان
+    والعديد من الأدوات اليومية.
+    """
 )
 
 
+# ==================================================
+# TOOLS
+# ==================================================
+
+st.subheader("🧰 الأدوات")
+
+st.write("اختر الأداة التي تريد استخدامها:")
+
+col1, col2, col3 = st.columns(3)
+
+
+with col1:
+
+    st.subheader("🤖 AI Assistant")
+
+    st.write(
+        "مساعد ذكي يساعدك في البرمجة "
+        "والأسئلة التقنية."
+    )
+
+    if st.button("فتح المساعد", key="ai"):
+        st.success("تم اختيار AI Assistant")
+
+
+with col2:
+
+    st.subheader("🧮 Calculator")
+
+    st.write(
+        "آلة حاسبة سريعة للعمليات "
+        "الحسابية."
+    )
+
+    if st.button("فتح الحاسبة", key="calculator"):
+        st.success("تم اختيار Calculator")
+
+
+with col3:
+
+    st.subheader("🎨 Color Tools")
+
+    st.write(
+        "أدوات للتعامل مع الألوان "
+        "واختيارها."
+    )
+
+    if st.button("فتح الألوان", key="colors"):
+        st.success("تم اختيار Color Tools")
+
+
+# ==================================================
+# SECOND ROW
+# ==================================================
+
+st.write("")
+
+col4, col5, col6 = st.columns(3)
+
+
+with col4:
+
+    st.subheader("📝 Text Tools")
+
+    st.write(
+        "أدوات لمعالجة النصوص "
+        "وتنظيمها."
+    )
+
+    if st.button("فتح أدوات النصوص", key="text"):
+        st.success("تم اختيار Text Tools")
+
+
+with col5:
+
+    st.subheader("🐍 Python Tools")
+
+    st.write(
+        "أدوات مفيدة للمبرمجين "
+        "ومشاريع Python."
+    )
+
+    if st.button("فتح Python Tools", key="python"):
+        st.success("تم اختيار Python Tools")
+
+
+with col6:
+
+    st.subheader("🔐 Security")
+
+    st.write(
+        "أدوات بسيطة لبعض مهام "
+        "الأمان والحماية."
+    )
+
+    if st.button("فتح Security", key="security"):
+        st.success("تم اختيار Security")
+
+
+# ==================================================
+# FOOTER
+# ==================================================
+
+st.divider()
+
+st.caption(
+    "💻 CodeBox • Code smarter. Build faster. ⚡"
+)
+```
