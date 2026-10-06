@@ -1,4 +1,4 @@
-```python
+
 import io
 
 import streamlit as st
@@ -7,10 +7,6 @@ import speech_recognition as sr
 from utils.gemini_ai import GeminiAI
 from utils.speaker import Speaker
 
-
-# ==================================================
-# PAGE CONFIG
-# ==================================================
 
 st.set_page_config(
     page_title="CodeBox Personal Assistant",
@@ -21,46 +17,27 @@ st.set_page_config(
 
 
 # ==================================================
-# CSS
+# COLORS AND STYLE
 # ==================================================
 
 st.markdown(
     """
 <style>
-
 .stApp {
-    background:
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(37, 99, 235, 0.16),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 85% 15%,
-            rgba(124, 58, 237, 0.13),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(14, 116, 144, 0.10),
-            transparent 35%
-        ),
-        #080b14;
+    background-color: #080b14;
 }
 
 .block-container {
     max-width: 1200px;
     padding-top: 2rem;
-    padding-bottom: 3rem;
 }
 
 .assistant-title {
     font-size: 44px;
     font-weight: 800;
     text-align: center;
-    margin-top: 10px;
+    color: #60a5fa;
     margin-bottom: 5px;
-    color: #e5edff;
 }
 
 .assistant-subtitle {
@@ -70,48 +47,35 @@ st.markdown(
     margin-bottom: 25px;
 }
 
-[data-testid="stChatMessage"] {
-    background: rgba(15, 23, 42, 0.55);
-    border: 1px solid rgba(96, 165, 250, 0.10);
-    border-radius: 16px;
-    margin-bottom: 10px;
-}
-
-[data-testid="stChatInput"] {
-    background: #0f172a;
-    border: 1px solid rgba(96, 165, 250, 0.25);
-    border-radius: 16px;
-}
-
 .stButton > button {
-    background: #111827;
-    color: #e5edff;
-    border: 1px solid rgba(96, 165, 250, 0.22);
     border-radius: 12px;
-    transition: all 0.2s ease;
+    border: 1px solid #263b63;
+    background-color: #111827;
 }
 
 .stButton > button:hover {
-    background: #172554;
     border-color: #3b82f6;
-    transform: translateY(-2px);
+    background-color: #172554;
+}
+
+[data-testid="stChatMessage"] {
+    border-radius: 14px;
+    border: 1px solid #1e293b;
+}
+
+[data-testid="stChatInput"] {
+    border-radius: 14px;
+    border: 1px solid #263b63;
 }
 
 [data-testid="stSidebar"] {
-    background: #070a12;
-    border-right: 1px solid rgba(96, 165, 250, 0.15);
+    background-color: #070a12;
+    border-right: 1px solid #1e293b;
 }
 
 hr {
-    border-color: rgba(148, 163, 184, 0.12);
+    border-color: #1e293b;
 }
-
-h1,
-h2,
-h3 {
-    color: #e5edff;
-}
-
 </style>
 """,
     unsafe_allow_html=True,
@@ -159,8 +123,9 @@ if "assistant" not in st.session_state:
 
     except Exception as error:
         st.error(
-            f"❌ حدث خطأ أثناء تشغيل Gemini:\n\n{error}"
+            "❌ حدث خطأ أثناء تشغيل Gemini:"
         )
+        st.code(str(error))
         st.stop()
 
 
@@ -174,9 +139,10 @@ if "speaker" not in st.session_state:
         st.session_state.speaker = Speaker()
 
     except Exception as error:
-        st.error(
-            f"❌ حدث خطأ في نظام الصوت:\n\n{error}"
+        st.warning(
+            "⚠️ نظام الصوت غير متاح."
         )
+        st.code(str(error))
         st.session_state.speaker = None
 
 
@@ -187,11 +153,11 @@ if "speaker" not in st.session_state:
 for message in st.session_state.messages:
 
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        st.write(message["content"])
 
 
 # ==================================================
-# VOICE SECTION
+# VOICE
 # ==================================================
 
 st.write("### 🎤 التحدث مع المساعد")
@@ -201,15 +167,13 @@ audio_value = st.audio_input(
 )
 
 
-# ==================================================
-# VOICE TO TEXT
-# ==================================================
-
 voice_text = None
+
 
 if audio_value is not None:
 
     try:
+
         recognizer = sr.Recognizer()
 
         audio_bytes = audio_value.getvalue()
@@ -217,6 +181,7 @@ if audio_value is not None:
         audio_file = io.BytesIO(audio_bytes)
 
         with sr.AudioFile(audio_file) as source:
+
             audio_data = recognizer.record(source)
 
         voice_text = recognizer.recognize_google(
@@ -237,18 +202,20 @@ if audio_value is not None:
     except sr.RequestError as error:
 
         st.error(
-            f"❌ مشكلة في خدمة التعرف على الصوت:\n{error}"
+            "❌ مشكلة في خدمة التعرف على الصوت."
         )
+        st.code(str(error))
 
     except Exception as error:
 
         st.error(
-            f"❌ حدث خطأ أثناء معالجة الصوت:\n{error}"
+            "❌ حدث خطأ أثناء معالجة الصوت."
         )
+        st.code(str(error))
 
 
 # ==================================================
-# CHAT INPUT
+# TEXT INPUT
 # ==================================================
 
 prompt = st.chat_input(
@@ -257,7 +224,7 @@ prompt = st.chat_input(
 
 
 # ==================================================
-# SELECT INPUT
+# SELECT MESSAGE
 # ==================================================
 
 user_message = None
@@ -278,9 +245,8 @@ if user_message:
     if st.session_state.speaker:
         st.session_state.speaker.stop()
 
-    # ----------------------------------------------
+
     # USER MESSAGE
-    # ----------------------------------------------
 
     st.session_state.messages.append(
         {
@@ -289,40 +255,58 @@ if user_message:
         }
     )
 
-    with st.chat_message("user"):
-        st.markdown(user_message)
 
-    # ----------------------------------------------
-    # GEMINI RESPONSE
-    # ----------------------------------------------
+    with st.chat_message("user"):
+
+        st.write(user_message)
+
+
+    # AI RESPONSE
 
     with st.chat_message("assistant"):
 
         with st.spinner("🤔 بفكر..."):
 
-            response = (
-                st.session_state.assistant.generate_response(
-                    user_message
-                )
-            )
+            try:
 
-        st.markdown(response)
+                response = (
+                    st.session_state.assistant
+                    .generate_response(user_message)
+                )
+
+            except Exception as error:
+
+                response = (
+                    "❌ حدث خطأ أثناء الحصول على الرد.\n\n"
+                    + str(error)
+                )
+
+
+        st.write(response)
+
 
         st.session_state.last_response = response
 
-        # ------------------------------------------
-        # AUTO SPEAK
-        # ------------------------------------------
+
+        # SPEAK
 
         if st.session_state.speaker:
 
-            st.session_state.speaker.speak(
-                response
-            )
+            try:
 
-    # ----------------------------------------------
+                st.session_state.speaker.speak(
+                    response
+                )
+
+            except Exception as error:
+
+                st.warning(
+                    "⚠️ تعذر تشغيل الصوت."
+                )
+                st.code(str(error))
+
+
     # SAVE RESPONSE
-    # ----------------------------------------------
 
     st.session_state.messages.append(
         {
@@ -333,19 +317,18 @@ if user_message:
 
 
 # ==================================================
-# AUDIO CONTROL PANEL
+# AUDIO CONTROLS
 # ==================================================
 
 st.divider()
 
 st.write("### 🔊 التحكم في الصوت")
 
+
 audio_col1, audio_col2, audio_col3 = st.columns(3)
 
 
-# ==================================================
 # PLAY
-# ==================================================
 
 with audio_col1:
 
@@ -374,9 +357,7 @@ with audio_col1:
             )
 
 
-# ==================================================
 # STOP
-# ==================================================
 
 with audio_col2:
 
@@ -390,13 +371,11 @@ with audio_col2:
             st.session_state.speaker.stop()
 
             st.toast(
-                "🔇 تم إيقاف الصوت فورًا"
+                "🔇 تم إيقاف الصوت"
             )
 
 
-# ==================================================
-# CLEAR CHAT
-# ==================================================
+# CLEAR
 
 with audio_col3:
 
@@ -419,7 +398,7 @@ with audio_col3:
             pass
 
         st.toast(
-            "🗑️ تم مسح المحادثة بالكامل"
+            "🗑️ تم مسح المحادثة"
         )
 
         st.rerun()
@@ -431,7 +410,9 @@ with audio_col3:
 
 with st.sidebar:
 
-    st.title("🤖 CodeBox Assistant")
+    st.title(
+        "🤖 CodeBox Assistant"
+    )
 
     st.write(
         "مساعدك الشخصي للبرمجة والتعلم."
@@ -439,24 +420,34 @@ with st.sidebar:
 
     st.divider()
 
-    # ----------------------------------------------
-    # STATUS
-    # ----------------------------------------------
 
-    st.write("### 📊 حالة المساعد")
+    # STATUS
+
+    st.write(
+        "### 📊 حالة المساعد"
+    )
+
 
     if st.session_state.speaker:
 
-        if st.session_state.speaker.is_playing():
+        try:
 
-            st.warning(
-                "🗣️ المساعد يتحدث الآن"
-            )
+            if st.session_state.speaker.is_playing():
 
-        else:
+                st.warning(
+                    "🗣️ المساعد يتحدث الآن"
+                )
+
+            else:
+
+                st.success(
+                    "🟢 المساعد جاهز"
+                )
+
+        except Exception:
 
             st.success(
-                "🟢 المساعد جاهز"
+                "🟢 نظام الصوت متاح"
             )
 
     else:
@@ -465,13 +456,16 @@ with st.sidebar:
             "🔴 نظام الصوت غير متاح"
         )
 
+
     st.divider()
 
-    # ----------------------------------------------
-    # QUICK CONTROLS
-    # ----------------------------------------------
 
-    st.write("### 🎛️ التحكم السريع")
+    # QUICK CONTROLS
+
+    st.write(
+        "### 🎛️ التحكم السريع"
+    )
+
 
     if st.button(
         "🔊 تشغيل آخر رد",
@@ -487,22 +481,34 @@ with st.sidebar:
                 st.session_state.last_response
             )
 
+
     if st.button(
         "🔇 إيقاف الصوت",
         use_container_width=True,
     ):
 
         if st.session_state.speaker:
+
             st.session_state.speaker.stop()
+
 
     st.divider()
 
-    # ----------------------------------------------
-    # INFO
-    # ----------------------------------------------
 
-    st.caption("🎤 تحدث مع المساعد")
-    st.caption("🔊 العربي والإنجليزي مدعومان")
-    st.caption("🧠 مدعوم بواسطة Gemini")
-    st.caption("🚀 CodeBox")
-```
+    # INFO
+
+    st.caption(
+        "🎤 تحدث مع المساعد"
+    )
+
+    st.caption(
+        "🔊 العربي والإنجليزي مدعومان"
+    )
+
+    st.caption(
+        "🧠 مدعوم بواسطة Gemini"
+    )
+
+    st.caption(
+        "🚀 CodeBox"
+    )
