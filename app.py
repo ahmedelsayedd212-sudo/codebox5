@@ -1,4 +1,4 @@
-```python
+
 import streamlit as st
 
 
@@ -212,4 +212,4 @@ st.divider()
 st.caption(
     "💻 CodeBox • Code smarter. Build faster. ⚡"
 )
-```
+
