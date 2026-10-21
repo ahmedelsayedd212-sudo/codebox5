@@ -331,7 +331,7 @@ st.divider()
 # FEATURES
 # =========================
 
-st.markdown(
+st.markdown( """
     '<div class="section-heading">✦ استكشف عالم CodeBox</div>',
     unsafe_allow_html=True,
 )
