@@ -6,19 +6,15 @@ st.set_page_config(
     page_title="CodeBox | Home",
     page_icon="💻",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # =========================
-# CSS DESIGN
+# STYLE
 # =========================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
-
-html, body, [class*="css"] {
-    font-family: 'Cairo', sans-serif;
-}
 
 .stApp {
     background:
@@ -26,6 +22,10 @@ html, body, [class*="css"] {
         radial-gradient(ellipse at bottom left, #10213c 0%, transparent 35%),
         #070b10;
     color: #f1f5f9;
+}
+
+html, body, [class*="css"] {
+    font-family: 'Cairo', sans-serif;
 }
 
 header[data-testid="stHeader"] {
@@ -45,26 +45,12 @@ header[data-testid="stHeader"] {
 .hero {
     position: relative;
     overflow: hidden;
-    padding: 48px 30px;
-    border: 1px solid rgba(52, 211, 153, 0.28);
-    border-radius: 25px;
-    background: linear-gradient(135deg,
-        rgba(16, 45, 36, 0.96),
-        rgba(10, 20, 32, 0.97));
-    box-shadow: 0 15px 55px rgba(0, 0, 0, 0.24);
-    animation: fadeIn 1s ease;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    top: -120px;
-    right: -70px;
-    background: rgba(52, 211, 153, 0.12);
-    filter: blur(8px);
+    padding: 42px 30px;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 24px;
+    background: linear-gradient(135deg, #102d24, #0a1420);
+    box-shadow: 0 15px 55px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.8s ease;
 }
 
 .logo {
@@ -75,11 +61,11 @@ header[data-testid="stHeader"] {
 }
 
 .hero h1 {
-    font-size: clamp(35px, 5vw, 58px);
+    font-size: clamp(34px, 5vw, 54px);
     font-weight: 800;
-    margin: 18px 0 10px 0;
+    margin: 20px 0 12px;
     color: #ffffff;
-    line-height: 1.35;
+    line-height: 1.5;
 }
 
 .hero h1 span {
@@ -88,9 +74,9 @@ header[data-testid="stHeader"] {
 
 .hero p {
     color: #cbd5e1;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 2;
-    max-width: 700px;
+    max-width: 750px;
 }
 
 .tag {
@@ -104,9 +90,9 @@ header[data-testid="stHeader"] {
 }
 
 .terminal {
-    margin-top: 25px;
-    padding: 22px;
-    border-radius: 16px;
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 14px;
     background: #060a0f;
     border: 1px solid #253746;
     direction: ltr;
@@ -114,7 +100,6 @@ header[data-testid="stHeader"] {
     color: #d1fae5;
     font-family: Consolas, monospace;
     line-height: 2;
-    box-shadow: inset 0 0 25px rgba(52, 211, 153, 0.04);
 }
 
 .terminal .muted {
@@ -126,9 +111,9 @@ header[data-testid="stHeader"] {
 }
 
 .section-title {
-    font-size: 27px;
+    font-size: 26px;
     font-weight: 800;
-    margin: 35px 0 6px 0;
+    margin: 32px 0 5px;
     color: #f8fafc;
 }
 
@@ -138,10 +123,10 @@ header[data-testid="stHeader"] {
 }
 
 .feature-card {
-    min-height: 175px;
-    padding: 22px;
-    border-radius: 18px;
-    background: rgba(15, 23, 42, 0.75);
+    min-height: 155px;
+    padding: 20px;
+    border-radius: 17px;
+    background: rgba(15, 23, 42, 0.8);
     border: 1px solid #263449;
     transition: all 0.25s ease;
     margin-bottom: 12px;
@@ -155,26 +140,26 @@ header[data-testid="stHeader"] {
 
 .feature-icon {
     font-size: 30px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .feature-card h3 {
     color: #f1f5f9;
     font-size: 18px;
-    margin: 0 0 8px 0;
+    margin: 0 0 8px;
 }
 
 .feature-card p {
     color: #94a3b8;
     font-size: 14px;
-    line-height: 1.9;
+    line-height: 1.8;
     margin: 0;
 }
 
 .footer-box {
     text-align: center;
-    margin-top: 35px;
-    padding: 20px;
+    margin-top: 30px;
+    padding: 22px;
     border-top: 1px solid #263449;
     color: #64748b;
     font-size: 13px;
@@ -182,7 +167,7 @@ header[data-testid="stHeader"] {
 
 div.stButton > button {
     border-radius: 12px;
-    min-height: 48px;
+    min-height: 46px;
     font-weight: 700;
     border: 1px solid #34d399;
     background: #34d399;
@@ -199,7 +184,7 @@ div.stButton > button:hover {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(12px);
     }
     to {
         opacity: 1;
@@ -217,7 +202,7 @@ if "codebox_welcome_shown" not in st.session_state:
     st.session_state.codebox_welcome_shown = True
 
     components.html("""
-    <div style="
+    <div id="welcome" style="
         position:fixed;
         inset:0;
         z-index:999999;
@@ -228,22 +213,22 @@ if "codebox_welcome_shown" not in st.session_state:
         justify-content:center;
         align-items:center;
         font-family:Arial,sans-serif;
-        animation: hideScreen 3.2s forwards;
+        animation: hideScreen 3s forwards;
     ">
         <div style="
-            width:82px;
-            height:82px;
+            width:80px;
+            height:80px;
             border:2px solid #34d399;
             border-radius:22px;
             display:flex;
             align-items:center;
             justify-content:center;
-            font-size:37px;
+            font-size:36px;
             box-shadow:0 0 35px rgba(52,211,153,.22);
             animation: logoPop .8s ease;
         ">💻</div>
 
-        <h1 style="margin:22px 0 5px;font-size:37px;letter-spacing:2px">
+        <h1 style="margin:22px 0 5px;font-size:38px">
             Code<span style="color:#34d399">Box</span>
         </h1>
 
@@ -263,7 +248,7 @@ if "codebox_welcome_shown" not in st.session_state:
                 height:100%;
                 width:0;
                 background:#34d399;
-                animation: loadBar 2.2s ease forwards;
+                animation: loadBar 2s ease forwards;
             "></div>
         </div>
 
@@ -285,11 +270,12 @@ if "codebox_welcome_shown" not in st.session_state:
 
 
 # =========================
-# HERO SECTION
+# HERO
 # =========================
 st.markdown("""
 <div class="hero">
     <div class="logo">💻 CODEBOX</div>
+
     <div style="margin-top:18px">
         <span class="tag">🚀 YOUR DEVELOPER TOOLKIT</span>
     </div>
@@ -312,7 +298,7 @@ st.markdown("""
             <span class="green">print</span>("Let's build something great!")
         </div>
         <div class="green" style="margin-top:8px">
-            &gt; Ready to code_ 
+            &gt; Ready to code_
         </div>
     </div>
 </div>
@@ -320,7 +306,7 @@ st.markdown("""
 
 
 # =========================
-# TOOLS SECTION
+# TOOLS
 # =========================
 st.markdown("""
 <div class="section-title">🧰 أدواتك البرمجية</div>
@@ -391,8 +377,10 @@ with col6:
 # =========================
 # STATUS
 # =========================
-st.markdown('<div class="section-title">📊 حالة المنصة</div>',
-            unsafe_allow_html=True)
+st.markdown(
+    '<div class="section-title">📊 حالة المنصة</div>',
+    unsafe_allow_html=True
+)
 
 m1, m2, m3 = st.columns(3)
 
